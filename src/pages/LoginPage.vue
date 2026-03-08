@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px">
-    <q-form @submit="onSubmit" class="q-gutter-md">
+  <div class="flex flex-center window-height window-width">
+    <q-form class="q-pa-lg q-gutter-md" style="max-width: 400px; width: 100%" @submit="onSubmit">
       <q-input
         filled
         v-model="username"
@@ -14,7 +14,6 @@
 
       <div>
         <q-btn label="Submit" type="submit" color="primary" />
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
       </div>
     </q-form>
   </div>
@@ -41,7 +40,6 @@ const onSubmit = () => {
   } catch (error) {
     console.error(error);
   }
-
 };
 </script>
 
