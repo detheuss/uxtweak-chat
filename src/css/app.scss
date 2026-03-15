@@ -1,1 +1,35 @@
-// app global css in SCSS form
+@use 'variables' as *;
+
+:root {
+  --q-color-user-default: #{$color-user-default};
+  --q-color-user-cyan: #{$color-user-cyan};
+  --q-color-user-violet: #{$color-user-violet};
+  --q-color-user-green: #{$color-user-green};
+  --q-color-user-rose: #{$color-user-rose};
+  --q-color-user-amber: #{$color-user-amber};
+  --q-color-border: #{$color-border};
+}
+
+.border {
+  border: 1px solid var(--q-color-border);
+}
+.border-t {
+  border-top: 1px solid var(--q-color-border);
+}
+.border-b {
+  border-bottom: 1px solid var(--q-color-border);
+}
+.border-s {
+  border-left: 1px solid var(--q-color-border);
+}
+.border-e {
+  border-right: 1px solid var(--q-color-border);
+}
+
+.border-test {
+  border: 2px solid red;
+}
+
+.height-none {
+  height: 0;
+}

@@ -1,18 +1,16 @@
 <template>
-  <div class="flex flex-center window-height window-width">
-    <q-form class="q-pa-lg q-gutter-md" style="max-width: 400px; width: 100%" @submit="onSubmit">
+  <div class="flex column flex-center window-height window-width">
+    <q-form class="q-pa-md" style="max-width: 400px; width: 100%" @submit="onSubmit">
       <q-input
         filled
         v-model="username"
-        label="Your username *"
-        hint="Create your username"
+        label="Enter your username *"
         lazy-rules
         :rules="usernameRules"
       />
+      <div class="flex q-gutter-x-md justify-between">
+        <q-toggle v-model="isRemembered" class="q-ml-auto" label="Remember me" />
 
-      <q-toggle v-model="isRemembered" label="Remember me" />
-
-      <div>
         <q-btn label="Submit" type="submit" color="primary" />
       </div>
     </q-form>

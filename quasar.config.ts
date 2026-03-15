@@ -52,7 +52,10 @@ export default defineConfig((/* ctx */) => {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        BASE_API_URL: process.env.BASE_API_URL ?? 'http://localhost:3001',
+        BASE_WS_URL: process.env.BASE_WS_URL ?? 'ws://localhost:3001',
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,

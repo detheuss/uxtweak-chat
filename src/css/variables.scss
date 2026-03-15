@@ -1,0 +1,10 @@
+$color-user-default: oklch(37% 0.013 285.805); // indigo-950
+$color-user-cyan: oklch(0.789 0.154 211.53); // cyan-400
+$color-user-violet: oklch(0.714 0.203 305.504); // violet-400
+$color-user-green: oklch(0.792 0.209 151.711); // green-400
+$color-user-rose: oklch(0.704 0.191 22.216); // rose-400
+$color-user-amber: oklch(0.828 0.189 84.429); // amber-400
+$color-border: oklch(27.4% 0.006 286.033); // zinc-400
+
+$header-height: 50px;
+$page-height: calc(100dvh - $header-height);
