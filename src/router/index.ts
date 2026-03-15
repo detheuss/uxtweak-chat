@@ -6,6 +6,8 @@ import {
   createWebHistory,
 } from 'vue-router';
 import routes from './routes';
+import { PATHS } from 'src/router/constants';
+import { useUserStore } from 'src/stores/user.store';
 
 /*
  * If not building with SSR mode, you can
@@ -31,6 +33,18 @@ export default defineRouter(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
+  });
+
+  Router.beforeEach((to) => {
+    const userStore = useUserStore();
+
+    if (to.path === PATHS.login && userStore.user.name) {
+      return { path: PATHS.home };
+    }
+
+    if (to.path !== PATHS.login && !userStore.user.name) {
+      return { path: PATHS.login };
+    }
   });
 
   return Router;

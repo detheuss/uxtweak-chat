@@ -20,9 +20,12 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import { useUserStore } from 'src/stores/user.store';
+import { PATHS } from 'src/router/constants';
 import { ref } from 'vue';
 
+const router = useRouter();
 const userStore = useUserStore();
 
 const username = ref('');
@@ -34,12 +37,11 @@ const usernameRules = [
 ];
 
 const onSubmit = () => {
-  try {
-    userStore.setUsername(username.value);
-    userStore.setIsRemembered(isRemembered.value);
-  } catch (error) {
-    console.error(error);
-  }
+  userStore.setUser({
+    name: username.value,
+    isRemembered: isRemembered.value,
+  });
+  void router.push(PATHS.home);
 };
 </script>
 
