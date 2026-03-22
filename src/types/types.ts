@@ -1,5 +1,5 @@
-import type { UserT } from 'shared/types';
+import type { BaseUserT } from 'shared/types';
 
-export interface SessionUserT extends UserT {
+export interface SessionUserT extends BaseUserT {
   isRemembered: boolean;
 }

@@ -1,10 +1,10 @@
 import { useWebSocket } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import type { ChatMessageT } from 'shared/types';
+import type { SessionChatMessageT } from 'shared/types';
 import { ref, watch } from 'vue';
 
 export const useChatMessageStore = defineStore('chatMessage', () => {
-  const chatMessages = ref<ChatMessageT[]>([]);
+  const chatMessages = ref<SessionChatMessageT[]>([]);
 
   const { data, send } = useWebSocket(process.env.BASE_WS_URL);
 
@@ -13,7 +13,7 @@ export const useChatMessageStore = defineStore('chatMessage', () => {
     chatMessages.value.push(msg);
   });
 
-  const apiSendChatMessage = (message: ChatMessageT) => {
+  const apiSendChatMessage = (message: SessionChatMessageT) => {
     const messageJson = JSON.stringify(message);
     send(messageJson);
   };
