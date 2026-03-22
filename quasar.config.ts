@@ -1,6 +1,7 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from '#q-app/wrappers';
 
 export default defineConfig((/* ctx */) => {
@@ -40,7 +41,6 @@ export default defineConfig((/* ctx */) => {
       typescript: {
         strict: true,
         vueShim: true,
-        // extendTsConfig (tsConfig) {}
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -62,7 +62,9 @@ export default defineConfig((/* ctx */) => {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      alias: {
+        shared: fileURLToPath(new URL('./shared', import.meta.url)),
+      },
       // viteVuePluginOptions: {},
 
       vitePlugins: [

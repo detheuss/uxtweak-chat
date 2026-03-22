@@ -1,7 +1,7 @@
-import type { UserT } from 'src/types/types';
+import type { SessionUserT } from 'src/types/types';
+import { USER_COLOR_NAMES } from 'shared/constants';
 
-export const USER_COLOR_NAMES = ['default', 'cyan', 'violet', 'green', 'rose', 'amber'] as const;
-export const NULL_USER: UserT = {
+export const NULL_USER: SessionUserT = {
   name: '',
   id: '',
   isRemembered: false,

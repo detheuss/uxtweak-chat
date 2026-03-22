@@ -1,6 +1,6 @@
 import { useWebSocket } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import type { ChatMessageT } from 'src/types/types';
+import type { ChatMessageT } from 'shared/types';
 import { ref, watch } from 'vue';
 
 export const useChatMessageStore = defineStore('chatMessage', () => {
