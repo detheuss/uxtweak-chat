@@ -7,8 +7,8 @@ export class ChatMessageDb {
 
   constructor(db: Database.Database) {
     this.insertStmt = db.prepare(`
-      INSERT INTO chat_messages (id, message, timestamp, author_id, author_name, author_color_name)
-      VALUES (@id, @message, @timestamp, @author_id, @author_name, @author_color_name)
+      INSERT INTO chat_messages (id, message, timestamp, author_id, author_name, author_avatar_src)
+      VALUES (@id, @message, @timestamp, @author_id, @author_name, @author_avatar_src)
     `);
 
     this.selectAllStmt = db.prepare('SELECT * FROM chat_messages ORDER BY timestamp ASC');

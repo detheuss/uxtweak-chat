@@ -8,3 +8,9 @@ $color-border: oklch(27.4% 0.006 286.033); // zinc-400
 
 $header-height: 50px;
 $page-height: calc(100dvh - $header-height);
+
+$screen-size-sm: 640px;
+$screen-size-md: 768px;
+$screen-size-lg: 1024px;
+$screen-size-xl: 1280px;
+$screen-size-2xl: 1536px;

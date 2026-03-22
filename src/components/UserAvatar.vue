@@ -1,15 +1,15 @@
 <template>
-  <div class="flex items-center q-gutter-x-sm">
-    <q-avatar size="md" :style="{ backgroundColor: userStore.getUserColor() }">
-      <span>{{ userStore.getUserAvatarChar() }}</span>
-    </q-avatar>
-  </div>
+  <q-avatar :size="`${width}px`">
+    <img :src="avatarSrc" :width="width" :height="height" />
+  </q-avatar>
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from 'src/stores/user.store';
+import { QAvatar } from 'quasar';
 
-const userStore = useUserStore();
+const { width = 48, height = 48 } = defineProps<{
+  avatarSrc?: string;
+  width?: number;
+  height?: number;
+}>();
 </script>
-
-<style scoped></style>

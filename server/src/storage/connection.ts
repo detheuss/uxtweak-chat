@@ -10,12 +10,12 @@ export const createDatabase = (dbPath: string): Database.Database => {
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS chat_messages (
-      id             TEXT PRIMARY KEY,
-      message        TEXT NOT NULL,
-      timestamp      TEXT NOT NULL,
-      author_id      TEXT NOT NULL,
-      author_name    TEXT NOT NULL,
-      author_color_name TEXT NOT NULL
+      id              TEXT PRIMARY KEY,
+      message         TEXT NOT NULL,
+      timestamp       TEXT NOT NULL,
+      author_id       TEXT NOT NULL,
+      author_name     TEXT NOT NULL,
+      author_avatar_src TEXT NOT NULL
     )
   `);
 

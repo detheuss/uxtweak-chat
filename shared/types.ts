@@ -1,11 +1,7 @@
-import type { USER_COLOR_NAMES } from './constants';
-
-export type UserColorNameT = (typeof USER_COLOR_NAMES)[number];
-
 export type BaseUserT = {
   name: string;
   id: string;
-  colorName: UserColorNameT;
+  avatarSrc: string;
 };
 
 export type BaseChatMessageT = {

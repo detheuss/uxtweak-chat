@@ -1,46 +1,59 @@
 <template>
-  <div class="flex column flex-center window-height window-width">
-    <q-form class="q-pa-md" style="max-width: 400px; width: 100%" @submit="onSubmit">
-      <q-input
-        filled
-        v-model="username"
-        label="Enter your username *"
-        lazy-rules
-        :rules="usernameRules"
-      />
-      <div class="flex q-gutter-x-md justify-between">
-        <q-toggle v-model="isRemembered" class="q-ml-auto" label="Remember me" />
+  <div class="flex column text-center flex-center q-pa-md">
+    <h3>Who is using chat?</h3>
 
-        <q-btn label="Submit" type="submit" color="primary" />
-      </div>
-    </q-form>
+    <div class="flex flex-wrap flex-center gap-md">
+      <button
+        v-for="user in TEST_USERS"
+        :key="user.id"
+        class="user-card__button"
+        @click="handleSelectUser(user)"
+      >
+        <UserCard v-bind="user" />
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { useUserStore } from 'src/stores/user.store';
+import type { BaseUserT } from 'app/shared/types';
+import UserCard from 'src/components/UserCard.vue';
+import { TEST_USERS } from 'src/constants/constants';
 import { PATHS } from 'src/router/constants';
-import { ref } from 'vue';
+import { useUserStore } from 'src/stores/user.store';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const userStore = useUserStore();
 
-const username = ref('');
-const isRemembered = ref(false);
-
-const usernameRules = [
-  (val: string) => (val && val.length > 0) || 'Username is required',
-  (val: string) => val.length >= 3 || 'Must be at least 3 characters',
-];
-
-const onSubmit = () => {
-  userStore.setUser({
-    name: username.value,
-    isRemembered: isRemembered.value,
-  });
+const handleSelectUser = (user: BaseUserT) => {
+  userStore.login(user);
   void router.push(PATHS.home);
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.user-cards__container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user-card__button {
+  all: unset;
+  position: relative;
+  cursor: pointer;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: transparent;
+    transition: background-color 0.2s ease-in-out;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+</style>

@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import type { SessionChatMessageT, UserColorNameT } from 'shared/types';
+import type { SessionChatMessageT } from 'shared/types';
 import type { ChatMessageDb } from '../storage/chatMessage.db';
 import type { ChatMessageRowT } from '../types/types';
 
@@ -17,7 +17,7 @@ export class ChatMessageService {
       timestamp: clientMsg.timestamp,
       author_id: clientMsg.author.id,
       author_name: clientMsg.author.name,
-      author_color_name: clientMsg.author.colorName,
+      author_avatar_src: clientMsg.author.avatarSrc,
     };
 
     this.chatMessageDb.save(row);
@@ -33,7 +33,7 @@ export class ChatMessageService {
       author: {
         id: row.author_id,
         name: row.author_name,
-        colorName: row.author_color_name as UserColorNameT,
+        avatarSrc: row.author_avatar_src,
       },
     }));
   }

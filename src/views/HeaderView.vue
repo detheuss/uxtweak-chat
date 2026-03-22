@@ -1,10 +1,9 @@
 <template>
   <q-toolbar class="border-b">
-    <q-toolbar-title class="flex items-center q-gutter-x-md">
+    <q-toolbar-title class="flex items-center q-px-md">
       <div class="flex items-center q-gutter-x-sm text-uppercase text-caption">
-        <span>Chatting as:</span>
-        <span class="text-bold flex items-center q-gutter-x-sm">
-          <UserAvatar />
+        <span class="text-bold flex items-center gap-sm">
+          <UserAvatar :avatar-src="userStore.user.avatarSrc" :width="24" :height="24" />
           <span>{{ userStore.user.name }}</span>
         </span>
       </div>

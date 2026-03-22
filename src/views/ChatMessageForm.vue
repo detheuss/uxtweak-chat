@@ -2,7 +2,7 @@
   <q-form
     ref="formRef"
     autofocus
-    class="full-width row items-end q-px-lg"
+    class="chat-message-form full-width row items-end q-px-lg q-py-md"
     @submit="sendChatMessage"
   >
     <q-input
@@ -21,14 +21,14 @@
 import { ref, computed, watch } from 'vue';
 import { useMagicKeys } from '@vueuse/core';
 import { checkIsMac, checkIsMobile } from 'src/utils/utils';
-import { useChatMessageStore } from 'src/stores/chatMessage.store';
-import { useUserStore } from 'src/stores/user.store';
+// import { useChatMessageStore } from 'src/stores/chatMessage.store';
+// import { useUserStore } from 'src/stores/user.store';
 
 const message = ref('');
 const formRef = ref();
 
-const { apiSendChatMessage } = useChatMessageStore();
-const userStore = useUserStore();
+// const { apiSendChatMessage } = useChatMessageStore();
+// const userStore = useUserStore();
 
 const keys = useMagicKeys();
 const shortcut = checkIsMac() ? keys['Meta+Enter']! : keys['Ctrl+Enter']!;
@@ -44,17 +44,23 @@ const placeholderText = computed(() => {
 
 const sendChatMessage = () => {
   const text = message.value.trim();
-  if (!text) return;
-  apiSendChatMessage({
-    message: text,
-    timestamp: new Date().toISOString(),
-    author: userStore.user,
-  });
+  console.log('text', text);
+  // if (!text) return;
+  // apiSendChatMessage({
+  //   message: text,
+  //   timestamp: new Date().toISOString(),
+  //   author: userStore.user,
+  // });
   message.value = '';
 };
 </script>
 
 <style lang="scss" scoped>
+.chat-message-form {
+  width: 100%;
+  max-width: 600px;
+  background: $dark-page;
+}
 .resize-none :deep(textarea) {
   resize: none;
 }
