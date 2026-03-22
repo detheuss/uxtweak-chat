@@ -1,51 +1,25 @@
-import { createServer } from 'node:http';
-import { WebSocketServer, WebSocket } from 'ws';
+import Fastify from 'fastify';
+import { createDatabase } from './storage/connection';
+import { ChatMessageDb } from './storage/chatMessage.db';
+import { ChatMessageService } from './abl/chatMessage.service';
+import { registerWebSocket, createBroadcast } from './api/chatMessage.ws';
+import { registerHttpRoutes } from './api/chatMessage.http';
 
-const PORT = 3001;
+const PORT = Number(process.env.PORT ?? 3001);
 
-const httpServer = createServer((_, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ status: 'ok' }));
-});
+const db = createDatabase('data/chat.db');
+const chatMessageDb = new ChatMessageDb(db);
+const chatMessageService = new ChatMessageService(chatMessageDb);
 
-const wss = new WebSocketServer({ server: httpServer });
+const fastify = Fastify({ logger: true });
 
-wss.on('connection', (socket: WebSocket) => {
-  console.log('Client connected');
+await registerWebSocket(fastify);
+const broadcast = createBroadcast(fastify);
+await registerHttpRoutes(fastify, chatMessageService, broadcast);
 
-  socket.send(
-    JSON.stringify({
-      type: 'system',
-      message: 'Connected to server',
-    }),
-  );
-
-  socket.on('message', (rawMessage) => {
-    const text = rawMessage.toString();
-
-    console.log('Received:', text);
-
-    for (const client of wss.clients) {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(
-          JSON.stringify({
-            type: 'chat',
-            message: text,
-          }),
-        );
-      }
-    }
-  });
-
-  socket.on('close', () => {
-    console.log('Client disconnected');
-  });
-
-  socket.on('error', (error) => {
-    console.error('Socket error:', error);
-  });
-});
-
-httpServer.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+fastify.listen({ port: PORT, host: '0.0.0.0' }, (err) => {
+  if (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
 });
