@@ -1,8 +1,6 @@
 import { ROUTE_MESSAGES } from 'app/shared/const';
-import axios from 'axios';
 import type { ChatMessageDtoOutT } from 'shared/types';
-
-const api = axios.create({ baseURL: process.env.BASE_API_URL });
+import { api } from 'src/boot/axios';
 
 export const apiSendChatMessage = async (body: ChatMessageDtoOutT) => {
   return api.post(ROUTE_MESSAGES, body);
