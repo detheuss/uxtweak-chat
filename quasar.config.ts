@@ -92,6 +92,10 @@ export default defineConfig((/* ctx */) => {
     framework: {
       config: {
         dark: true,
+        notify: {
+          position: 'top',
+          color: 'secondary',
+        },
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -105,7 +109,7 @@ export default defineConfig((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Notify'],
     },
 
     // animations: 'all', // --- includes all animations

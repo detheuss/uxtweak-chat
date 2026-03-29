@@ -57,8 +57,8 @@ describe('ChatMessageDb', () => {
 
     const rows = chatMessageDb.getAll();
     expect(rows).toHaveLength(2);
-    expect(rows[0]!.id).toBe('msg-early');
-    expect(rows[1]!.id).toBe('msg-late');
+    expect(rows[0]?.id).toBe('msg-early');
+    expect(rows[1]?.id).toBe('msg-late');
   });
 
   it('save rejects a duplicate primary key', () => {

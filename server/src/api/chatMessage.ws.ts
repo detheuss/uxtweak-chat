@@ -6,7 +6,7 @@ import type { WsEventT } from 'shared/types';
 export const registerWebSocket = async (fastify: FastifyInstance) => {
   await fastify.register(websocket);
 
-  fastify.get('/ws', { websocket: true }, (socket) => {
+  fastify.get('/', { websocket: true }, (socket) => {
     console.log('Client connected');
 
     socket.send(

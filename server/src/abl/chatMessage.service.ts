@@ -1,19 +1,21 @@
 import { randomUUID } from 'node:crypto';
-import type { SessionChatMessageT } from 'shared/types';
+import type { ChatMessageDtoOutT, ChatMessageDtoInT } from 'shared/types';
+import { sanitizeChatMessageText } from 'shared/utils';
 import type { ChatMessageDb } from '../storage/chatMessage.db';
 import type { ChatMessageRowT } from '../types/types';
 
-export type ClientChatMessageT = Omit<SessionChatMessageT, 'id'>;
+export type { ChatMessageDtoOutT as ClientChatMessageT };
 
 export class ChatMessageService {
   constructor(private chatMessageDb: ChatMessageDb) {}
 
-  saveMessage(clientMsg: ClientChatMessageT): SessionChatMessageT {
+  saveMessage(clientMsg: ChatMessageDtoOutT): ChatMessageDtoInT {
     const id = randomUUID();
+    const message = sanitizeChatMessageText(clientMsg.message);
 
     const row: ChatMessageRowT = {
       id,
-      message: clientMsg.message,
+      message,
       timestamp: clientMsg.timestamp,
       author_id: clientMsg.author.id,
       author_name: clientMsg.author.name,
@@ -22,10 +24,10 @@ export class ChatMessageService {
 
     this.chatMessageDb.save(row);
 
-    return { id, ...clientMsg };
+    return { id, ...clientMsg, message };
   }
 
-  getAllMessages(): SessionChatMessageT[] {
+  getAllMessages(): ChatMessageDtoInT[] {
     return this.chatMessageDb.getAll().map((row) => ({
       id: row.id,
       message: row.message,
@@ -36,5 +38,13 @@ export class ChatMessageService {
         avatarSrc: row.author_avatar_src,
       },
     }));
+  }
+
+  deleteMessage(id: string): void {
+    this.chatMessageDb.deleteById(id);
+  }
+
+  deleteAllMessages(): void {
+    this.chatMessageDb.deleteAll();
   }
 }

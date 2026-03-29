@@ -10,10 +10,30 @@ export type BaseChatMessageT = {
   timestamp: string;
 };
 
-export interface SessionChatMessageT extends BaseChatMessageT {
+export type ChatMessageDtoInT = BaseChatMessageT & {
+  id: string;
   author: BaseUserT;
-}
+};
 
-export type WsEventT =
-  | { type: 'system'; message: string }
-  | { type: 'chat'; data: SessionChatMessageT };
+/** ID omitted, server assigns it. */
+export type ChatMessageDtoOutT = Omit<BaseChatMessageT, 'id'> & { author: BaseUserT };
+
+export type ChatMessageDisplayT = {
+  display: {
+    text: string[];
+    name: string;
+    stamp: string;
+    avatar: string;
+  };
+  meta: {
+    author: ChatMessageDtoInT['author'];
+    lastTimestamp: ChatMessageDtoInT['timestamp'];
+    id: string;
+  };
+};
+
+export type WsEventT = {
+  type: 'chat' | 'system';
+  data?: ChatMessageDtoInT;
+  message?: string;
+};
