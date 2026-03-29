@@ -15,10 +15,6 @@ const routes: RouteRecordRaw[] = [
     path: PATHS.login,
     component: () => import('pages/LoginPage.vue'),
   },
-  // {
-  //   path: PATHS.chat,
-  //   component: () => import('pages/ChatPage.vue'),
-  // },
 ];
 
 export default routes;

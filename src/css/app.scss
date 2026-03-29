@@ -26,10 +26,6 @@
   border-right: 1px solid var(--q-color-border);
 }
 
-.border-test {
-  border: 2px solid red;
-}
-
 // Real CSS gap utilities because Quasar only has q-gutter with negative-margin hack.
 // Open since 2024 with no resolution: https://github.com/quasarframework/quasar/discussions/16868
 @each $name, $size in $flex-gutter {

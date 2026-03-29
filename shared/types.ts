@@ -15,8 +15,11 @@ export type ChatMessageDtoInT = BaseChatMessageT & {
   author: BaseUserT;
 };
 
-/** ID omitted, server assigns it. */
-export type ChatMessageDtoOutT = Omit<BaseChatMessageT, 'id'> & { author: BaseUserT };
+/** Client POST body: message + author only; server assigns id and timestamp. */
+export type ChatMessageDtoOutT = {
+  message: string;
+  author: BaseUserT;
+};
 
 export type ChatMessageDisplayT = {
   display: {

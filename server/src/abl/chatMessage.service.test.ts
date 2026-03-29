@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ChatMessageDb } from '../storage/chatMessage.db';
 import { ChatMessageService, type ClientChatMessageT } from './chatMessage.service';
 
@@ -19,7 +19,6 @@ const SCHEMA = `
 function makeClientMessage(overrides: Partial<ClientChatMessageT> = {}): ClientChatMessageT {
   return {
     message: 'Hi there',
-    timestamp: '2026-03-22T14:00:00.000Z',
     author: {
       id: 'user-1',
       name: 'Alice',
@@ -36,6 +35,12 @@ describe('ChatMessageService', () => {
     const db = new Database(':memory:');
     db.exec(SCHEMA);
     service = new ChatMessageService(new ChatMessageDb(db));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-03-22T14:00:00.000Z'));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   describe('saveMessage', () => {
@@ -77,22 +82,16 @@ describe('ChatMessageService', () => {
     });
 
     it('returns messages ordered by timestamp ascending', () => {
-      const early = makeClientMessage({
-        message: 'early',
-        timestamp: '2026-03-22T08:00:00.000Z',
-      });
-      const late = makeClientMessage({
-        message: 'late',
-        timestamp: '2026-03-22T20:00:00.000Z',
-      });
+      vi.setSystemTime(new Date('2026-03-22T08:00:00.000Z'));
+      service.saveMessage(makeClientMessage({ message: 'early' }));
 
-      service.saveMessage(late);
-      service.saveMessage(early);
+      vi.setSystemTime(new Date('2026-03-22T20:00:00.000Z'));
+      service.saveMessage(makeClientMessage({ message: 'late' }));
 
       const all = service.getAllMessages();
       expect(all).toHaveLength(2);
-      expect(all[0]!.message).toBe('early');
-      expect(all[1]!.message).toBe('late');
+      expect(all[0]?.message).toBe('early');
+      expect(all[1]?.message).toBe('late');
     });
 
     it('correctly maps flat DB rows back to nested SessionChatMessageT', () => {
@@ -104,8 +103,8 @@ describe('ChatMessageService', () => {
       service.saveMessage(clientMsg);
       const [msg] = service.getAllMessages();
 
-      expect(msg!.author).toEqual({ id: 'u-99', name: 'Zara', avatarSrc: '/zara.png' });
-      expect(msg!.message).toBe('nested check');
+      expect(msg?.author).toEqual({ id: 'u-99', name: 'Zara', avatarSrc: '/zara.png' });
+      expect(msg?.message).toBe('nested check');
     });
   });
 });

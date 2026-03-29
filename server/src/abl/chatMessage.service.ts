@@ -12,11 +12,12 @@ export class ChatMessageService {
   saveMessage(clientMsg: ChatMessageDtoOutT): ChatMessageDtoInT {
     const id = randomUUID();
     const message = sanitizeChatMessageText(clientMsg.message);
+    const timestamp = new Date().toISOString();
 
     const row: ChatMessageRowT = {
       id,
       message,
-      timestamp: clientMsg.timestamp,
+      timestamp,
       author_id: clientMsg.author.id,
       author_name: clientMsg.author.name,
       author_avatar_src: clientMsg.author.avatarSrc,
@@ -24,7 +25,7 @@ export class ChatMessageService {
 
     this.chatMessageDb.save(row);
 
-    return { id, ...clientMsg, message };
+    return { id, message, timestamp, author: clientMsg.author };
   }
 
   getAllMessages(): ChatMessageDtoInT[] {

@@ -17,7 +17,6 @@ export const createMessageDto = (normalizedText: string, user?: BaseUserT) => {
   if (!user) throw new Error('User is required');
   return {
     message: normalizedText,
-    timestamp: new Date().toISOString(),
     author: user,
   };
 };

@@ -34,7 +34,6 @@ export const registerHttpRoutes = async (
     return reply.status(204).send();
   });
 
-  // delete all messages
   fastify.delete(`${ROUTE_MESSAGES}/all`, async (request, reply) => {
     service.deleteAllMessages();
     return reply.status(204).send();

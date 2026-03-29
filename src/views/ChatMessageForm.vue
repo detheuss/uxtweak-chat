@@ -3,7 +3,7 @@
     ref="formRef"
     :autofocus="!checkIsMobile()"
     class="chat-message-form full-width row items-end q-px-lg q-py-md"
-    @submit.prevent="handleSendChatMessage"
+    @submit="handleSendChatMessage"
   >
     <q-input
       v-model="message"
