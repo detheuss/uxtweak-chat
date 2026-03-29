@@ -13,6 +13,7 @@
     "dev": "concurrently -n client,server -c blue,green \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "quasar dev",
     "dev:server": "npm run dev --prefix server",
+    "dev:network": "LOCAL_IP=$(hostname -I | awk '{print $1}') && concurrently -n client,server -c blue,green \"BASE_API_URL=http://$LOCAL_IP:3001 BASE_WS_URL=ws://$LOCAL_IP:3001 quasar dev --host\" \"npm run dev --prefix server\"",
     "build": "quasar build",
     "postinstall": "quasar prepare"
   },
